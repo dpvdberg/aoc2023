@@ -28,33 +28,78 @@ public class Day3Solution : Solution
             _ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
         };
     }
-}
 
-public class Schematic
-{
-    private CharMatrix Matrix { get; }
-
-    public Schematic(List<string> lines)
+    private class Schematic
     {
-        Matrix = new CharMatrix(lines);
+        private CharMatrix Matrix { get; }
+
+        public Schematic(List<string> lines)
+        {
+            Matrix = new CharMatrix(lines);
+        }
+
+        public int SumSymbolNumbers() =>
+            Matrix.GetNumberObjects()
+                .Where(n => n.HasSymbolInSurroundings(Matrix))
+                .Select(n => int.Parse(n.Object))
+                .Sum();
+
+        public int SumGearRatios()
+        {
+            var numberObject = Matrix.GetNumberObjects();
+            return Matrix.GetGearObjects()
+                .Where(g => numberObject.Count(g.IsAdjacentTo) == 2)
+                .Select(g => numberObject.Where(g.IsAdjacentTo).Aggregate(1, (i, o) => i * int.Parse(o.Object)))
+                .Sum();
+        }
     }
 
-    public int SumSymbolNumbers() =>
-        Matrix.GetNumberObjects()
-            .Where(n => n.HasSymbolInSurroundings(Matrix))
-            .Select(n => int.Parse(n.Object))
-            .Sum();
 
-    public int SumGearRatios()
+    private class SchematicObject
     {
-        var numberObject = Matrix.GetNumberObjects();
-        return Matrix.GetGearObjects()
-            .Where(g => numberObject.Count(g.IsAdjacentTo) == 2)
-            .Select(g => numberObject.Where(g.IsAdjacentTo).Aggregate(1, (i, o) => i * int.Parse(o.Object)))
-            .Sum();
+        public string Object { get; }
+
+
+        public int X { get; }
+        public int Y { get; }
+
+        public SchematicObject(string obj, int x, int y)
+        {
+            Object = obj;
+            X = x;
+            Y = y;
+        }
+
+        private List<Point> Surroundings()
+        {
+            var xMin = X - 1;
+            var xMax = X + Object.Length;
+            var yMin = Y - 1;
+            var yMax = Y + 1;
+            var surroundings = new List<Point>
+            {
+                new(xMin, Y), new(xMax, Y)
+            };
+            surroundings.AddRange(Enumerable.Range(xMin, xMax - xMin + 1).Select(x => new Point(x, yMin)));
+            surroundings.AddRange(Enumerable.Range(xMin, xMax - xMin + 1).Select(x => new Point(x, yMax)));
+            return surroundings;
+        }
+
+        private List<Point> InternalPoints()
+            => Enumerable.Range(X, Object.Length).Select(x => new Point(x, Y)).ToList();
+
+
+        public bool HasSymbolInSurroundings(CharMatrix matrix)
+            => Surroundings()
+                .Select(p => matrix.Matrix[p.Y][p.X])
+                .Any(c => c != '.' && !char.IsDigit(c));
+
+        public bool IsAdjacentTo(SchematicObject o)
+            => Surroundings()
+                .Any(p => o.InternalPoints().Any(i => p.X == i.X && p.Y == i.Y));
     }
 
-    internal class CharMatrix
+    private class CharMatrix
     {
         private List<string> Lines { get; }
         public DictionaryWithDefault<int, DictionaryWithDefault<int, char>> Matrix { get; }
@@ -100,50 +145,5 @@ public class Schematic
 
             return objects;
         }
-    }
-
-
-    internal class SchematicObject
-    {
-        public string Object { get; }
-
-
-        public int X { get; }
-        public int Y { get; }
-
-        public SchematicObject(string obj, int x, int y)
-        {
-            Object = obj;
-            X = x;
-            Y = y;
-        }
-
-        private List<Point> Surroundings()
-        {
-            var xMin = X - 1;
-            var xMax = X + Object.Length;
-            var yMin = Y - 1;
-            var yMax = Y + 1;
-            var surroundings = new List<Point>
-            {
-                new(xMin, Y), new(xMax, Y)
-            };
-            surroundings.AddRange(Enumerable.Range(xMin, xMax - xMin + 1).Select(x => new Point(x, yMin)));
-            surroundings.AddRange(Enumerable.Range(xMin, xMax - xMin + 1).Select(x => new Point(x, yMax)));
-            return surroundings;
-        }
-
-        private List<Point> InternalPoints()
-            => Enumerable.Range(X, Object.Length).Select(x => new Point(x, Y)).ToList();
-
-
-        public bool HasSymbolInSurroundings(CharMatrix matrix)
-            => Surroundings()
-                .Select(p => matrix.Matrix[p.Y][p.X])
-                .Any(c => c != '.' && !char.IsDigit(c));
-
-        public bool IsAdjacentTo(SchematicObject o)
-            => Surroundings()
-                .Any(p => o.InternalPoints().Any(i => p.X == i.X && p.Y == i.Y));
     }
 }

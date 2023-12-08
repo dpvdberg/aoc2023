@@ -50,76 +50,77 @@ public class Day2Solution : Solution
             _ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
         };
     }
-}
 
-public class Game
-{
-    public Game(int id, List<Hand> hands)
+
+    private class Game
     {
-        Id = id;
-        Hands = hands;
+        public Game(int id, List<Hand> hands)
+        {
+            Id = id;
+            Hands = hands;
+        }
+
+        public int Id { get; }
+        public List<Hand> Hands { get; }
     }
 
-    public int Id { get; }
-    public List<Hand> Hands { get; }
-}
-
-public class Hand
-{
-    public Hand(Dictionary<CubeColor, int> cubeCount)
+    private class Hand
     {
-        CubeCount = cubeCount;
-    }
+        public Hand(Dictionary<CubeColor, int> cubeCount)
+        {
+            CubeCount = cubeCount;
+        }
 
-    private Dictionary<CubeColor, int> CubeCount { get; }
+        private Dictionary<CubeColor, int> CubeCount { get; }
 
-    public Hand CombineMaxHand(Hand other)
-    {
-        return new Hand(
+        public Hand CombineMaxHand(Hand other)
+        {
+            return new Hand(
+                Enum.GetValues(typeof(CubeColor))
+                    .Cast<CubeColor>()
+                    .ToDictionary(c => c, c =>
+                        Math.Max(CubeCount.GetValueOrDefault(c, 0), other.CubeCount.GetValueOrDefault(c, 0))
+                    )
+            );
+        }
+
+        public static Hand Zero() => new Hand(
             Enum.GetValues(typeof(CubeColor))
                 .Cast<CubeColor>()
-                .ToDictionary(c => c, c =>
-                    Math.Max(CubeCount.GetValueOrDefault(c, 0), other.CubeCount.GetValueOrDefault(c, 0))
-                )
+                .ToDictionary(c => c, c => 0)
         );
+
+        public static Hand Parse(string handString)
+        {
+            return new Hand(
+                handString.Split(',')
+                    .Select(s => s.Trim())
+                    .Select(s => s.Split(' '))
+                    .ToDictionary(
+                        s => (CubeColor)Enum.Parse(typeof(CubeColor), s[1], true),
+                        s => int.Parse(s[0]
+                        ))
+            );
+        }
+
+        public int Power =>
+            Enum.GetValues(typeof(CubeColor))
+                .Cast<CubeColor>()
+                .Aggregate(1, (p, c) => p * CubeCount[c]);
+
+        public bool IsCompliantWith(Hand other) =>
+            Enum.GetValues(typeof(CubeColor))
+                .Cast<CubeColor>()
+                .All(c => IsCompliantWith(other, c));
+
+        private bool IsCompliantWith(Hand other, CubeColor color) =>
+            CubeCount.GetValueOrDefault(color, 0) <= other.CubeCount.GetValueOrDefault(color, 0);
     }
 
-    public static Hand Zero() => new Hand(
-        Enum.GetValues(typeof(CubeColor))
-            .Cast<CubeColor>()
-            .ToDictionary(c => c, c => 0)
-    );
-
-    public static Hand Parse(string handString)
+    private enum CubeColor
     {
-        return new Hand(
-            handString.Split(',')
-                .Select(s => s.Trim())
-                .Select(s => s.Split(' '))
-                .ToDictionary(
-                    s => (CubeColor)Enum.Parse(typeof(CubeColor), s[1], true),
-                    s => int.Parse(s[0]
-                    ))
-        );
+        Blue,
+        Red,
+        Green
     }
-
-    public int Power =>
-        Enum.GetValues(typeof(CubeColor))
-            .Cast<CubeColor>()
-            .Aggregate(1, (p, c) => p * CubeCount[c]);
-
-    public bool IsCompliantWith(Hand other) =>
-        Enum.GetValues(typeof(CubeColor))
-            .Cast<CubeColor>()
-            .All(c => IsCompliantWith(other, c));
-
-    private bool IsCompliantWith(Hand other, CubeColor color) =>
-        CubeCount.GetValueOrDefault(color, 0) <= other.CubeCount.GetValueOrDefault(color, 0);
-}
-
-public enum CubeColor
-{
-    Blue,
-    Red,
-    Green
 }
