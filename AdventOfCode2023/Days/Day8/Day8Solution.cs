@@ -29,15 +29,8 @@ public class Day8Solution : Solution
 
     private Map Parse()
     {
-        var lines = ReadInputLines();
-
         var pattern = ReadInputLines()[0];
         var directions = pattern.ToCharArray().Select(c => c.ParseEnum<Direction>()).ToList();
-
-        // remove pattern
-        lines.RemoveAt(0);
-        // empty line
-        lines.RemoveAt(0);
 
         var regex = new Regex(@"(\w+)\s=\s\((\w+),\s*(\w+)\)", RegexOptions.Multiline);
         var matches = regex.Matches(ReadInput());
