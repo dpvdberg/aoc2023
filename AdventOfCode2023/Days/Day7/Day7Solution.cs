@@ -35,21 +35,12 @@ public class Day7Solution : Solution
 
     public override string Solve(SolutionPart part)
     {
+        _interpretJokers = part == SolutionPart.PartB;
+        
         var hands = Parse();
-
-        switch (part)
-        {
-            case SolutionPart.PartA:
-                _interpretJokers = false;
-                hands.Sort();
-                return hands.Select((h, i) => h.Bid * (i + 1)).Sum().ToString();
-            case SolutionPart.PartB:
-                _interpretJokers = true;
-                hands.Sort();
-                return hands.Select((h, i) => h.Bid * (i + 1)).Sum().ToString();
-            default:
-                throw new ArgumentOutOfRangeException(nameof(part), part, null);
-        }
+        hands.Sort();
+        
+        return hands.Select((h, i) => h.Bid * (i + 1)).Sum().ToString();
     }
 
     private class Hand : IComparable<Hand>
