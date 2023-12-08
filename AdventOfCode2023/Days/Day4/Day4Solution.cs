@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using AdventOfCode2023.Common;
+using AdventOfCode2023.Utils;
 
 namespace AdventOfCode2023.Days.Day4;
 
@@ -49,34 +50,27 @@ public class Day4Solution : Solution
                 .Where(i => i < cards.Count)
                 .Select(i => cards[i])
                 .SelectMany(c => c.GetDescendants(cards)).ToList();
-            
+
             descendants.Add(this);
-            
+
             _descendantCache = descendants;
-            
+
             return descendants;
         }
 
-        public int CountPower => (int) Math.Pow(2, CountWinning - 1);
+        public int CountPower => (int)Math.Pow(2, CountWinning - 1);
 
         public int CountWinning => Provided.Intersect(Valid).Count();
 
         private static readonly Regex ParseRegex = new(@"Card\s+(\d+): ([\d+\s*]+)\|([\s*\d+]+)");
-        private static readonly Regex DigitRegex = new(@"\d+");
 
         public static ScratchCard ParseFromLine(string line)
         {
             var match = ParseRegex.Match(line);
             return new ScratchCard(
                 int.Parse(match.Groups[1].Value),
-                DigitRegex.Matches(match.Groups[2].Value)
-                    .SelectMany(m => m.Groups.Values)
-                    .Select(g => g.Value)
-                    .Select(int.Parse).ToList(),
-                DigitRegex.Matches(match.Groups[3].Value)
-                    .SelectMany(m => m.Groups.Values)
-                    .Select(g => g.Value)
-                    .Select(int.Parse).ToList()
+                match.Groups[2].Value.GetNumbers<int>(),
+                match.Groups[3].Value.GetNumbers<int>()
             );
         }
 

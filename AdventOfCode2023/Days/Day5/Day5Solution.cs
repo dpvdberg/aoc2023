@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using AdventOfCode2023.Common;
+using AdventOfCode2023.Utils;
 
 namespace AdventOfCode2023.Days.Day5;
 
@@ -122,13 +123,11 @@ public class Day5Solution : Solution
 
         public Mapping(List<string> mapLines)
         {
-            var lineRegex = new Regex(@"(\d+) (\d+) (\d+)");
             foreach (var line in mapLines)
             {
-                var lineMatch = lineRegex.Match(line);
-                var destination = long.Parse(lineMatch.Groups[1].Value);
-                var source = long.Parse(lineMatch.Groups[2].Value);
-                var length = long.Parse(lineMatch.Groups[3].Value);
+                var destination = line.GetNumbers<long>()[0];
+                var source = line.GetNumbers<long>()[1];
+                var length = line.GetNumbers<long>()[2];
 
                 RangeMaps.Add(new RangeMap(source, destination, length));
             }
