@@ -5,8 +5,6 @@ namespace AdventOfCode2023Tests.Days.Day3;
 
 public class Day6Tests
 {
-    
-    
     [TestCase(
         """
         Time:      7  15   30

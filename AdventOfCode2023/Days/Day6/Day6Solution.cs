@@ -63,6 +63,7 @@ public class Day6Solution : Solution
 
         public int GetWinningCount()
         {
+            // See description above
             var sqrt = Math.Sqrt(Time * Time - 4 * RecordDistance);
             var h1 = (Time + sqrt) / 2;
             var h2 = (Time - sqrt) / 2;

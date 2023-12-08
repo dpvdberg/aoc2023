@@ -5,6 +5,7 @@ using AdventOfCode2023.Days.Day3;
 using AdventOfCode2023.Days.Day4;
 using AdventOfCode2023.Days.Day5;
 using AdventOfCode2023.Days.Day6;
+using AdventOfCode2023.Days.Day7;
 
 var days = new List<Solution>()
 {
@@ -13,7 +14,8 @@ var days = new List<Solution>()
     // new Day3Solution(),
     // new Day4Solution(),
     // new Day5Solution(),
-    new Day6Solution()
+    new Day6Solution(),
+    new Day7Solution()
 };
 
 days.ForEach(s => s.PrintAllSolutions());
