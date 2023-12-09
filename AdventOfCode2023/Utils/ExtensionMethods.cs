@@ -21,7 +21,7 @@ public static class ExtensionMethods
         return (T)Enum.ToObject(typeof(T), value);
     }
 
-    private static readonly Regex DigitRegex = new(@"\d+", RegexOptions.Compiled);
+    private static readonly Regex DigitRegex = new(@"-?\d+", RegexOptions.Compiled);
 
     public static T LeastCommonMultiple<T>(this IEnumerable<T> values) where T : INumber<T>
         => values.Aggregate(MathUtils.LeastCommonMultiple);
