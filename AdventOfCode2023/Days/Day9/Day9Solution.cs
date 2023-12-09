@@ -20,18 +20,16 @@ public class Day9Solution : Solution
 
     public override string Solve(SolutionPart part)
     {
-        return part switch
+        var numberSequences = Parse();
+
+        if (part == SolutionPart.PartB)
         {
-            SolutionPart.PartA => Parse()
-                .Select(l => l.Extrapolate())
-                .Select(l => l.Numbers.Last())
-                .Sum().ToString(),
-            SolutionPart.PartB => Parse()
-                .Select(l => l.Extrapolate())
-                .Select(l => l.Numbers.First())
-                .Sum().ToString(),
-            _ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
-        };
+            numberSequences.ForEach(n => n.Numbers.Reverse());
+        }
+
+        return numberSequences
+            .Select(l => l.Extrapolate())
+            .Sum().ToString();
     }
 
     private class NumberSequence
@@ -48,26 +46,14 @@ public class Day9Solution : Solution
 
         private bool IsZero => Numbers.All(n => n == 0);
         
-        public NumberSequence Extrapolate()
+        public int Extrapolate()
         {
-            var n = new List<int>(Numbers);
             if (IsZero)
             {
-                n.Add(0);
-                n.Add(0);
-                return new NumberSequence(n);
+                return 0;
             }
             
-            // Get extrapolated difference sequence
-            var diffExt = GetDifferenceSequence().Extrapolate();
-            
-            // Add to start
-            n.Insert(0, Numbers.First() - diffExt.Numbers.First());
-            
-            // Add to end
-            n.Add(Numbers.Last() + diffExt.Numbers.Last());
-
-            return new NumberSequence(n);
+            return Numbers.Last() + GetDifferenceSequence().Extrapolate();
         }
     }
 }
