@@ -81,7 +81,7 @@ public class Day10Solution : Solution
             var remainingPipes = AllPipes.Except(loop);
 
             // Use ray algorithm,
-            // If number of loop pipes to the left of a point in the field is uneven, it is in the hull
+            // If number of crossings in the loop pipes to the left of a point in the field is uneven, it is in the hull
 
             int count = 0;
             foreach (var pipe in remainingPipes)
@@ -91,16 +91,7 @@ public class Day10Solution : Solution
                     .Where(p => p.Coord.X < pipe.Coord.X).ToList();
                 var leftCount = leftPipes.Count > 0 ? CountCrossings(leftPipes) : 0;
 
-                var rightPipes = _rawMatrix[pipe.Coord.Y]
-                    .Where(loop.Contains)
-                    .Where(p => p.Coord.X > pipe.Coord.X).ToList();
-                var rightCount = rightPipes.Count > 0 ? CountCrossings(rightPipes) : 0;
-
-                if (leftCount % 2 == 1 && rightCount > 0)
-                {
-                    count++;
-                }
-                else if (rightCount % 2 == 1 && leftCount > 0)
+                if (leftCount % 2 == 1 && leftCount > 0)
                 {
                     count++;
                 }
