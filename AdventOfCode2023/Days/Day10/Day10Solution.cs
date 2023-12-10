@@ -91,7 +91,16 @@ public class Day10Solution : Solution
                     .Where(p => p.Coord.X < pipe.Coord.X).ToList();
                 var leftCount = leftPipes.Count > 0 ? CountCrossings(leftPipes) : 0;
 
-                if (leftCount % 2 == 1 && leftCount > 0)
+                var rightPipes = _rawMatrix[pipe.Coord.Y]
+                    .Where(loop.Contains)
+                    .Where(p => p.Coord.X > pipe.Coord.X).ToList();
+                var rightCount = rightPipes.Count > 0 ? CountCrossings(rightPipes) : 0;
+
+                if (leftCount % 2 == 1 && rightCount > 0)
+                {
+                    count++;
+                }
+                else if (rightCount % 2 == 1 && leftCount > 0)
                 {
                     count++;
                 }
