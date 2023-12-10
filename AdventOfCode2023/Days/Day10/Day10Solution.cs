@@ -78,6 +78,16 @@ public class Day10Solution : Solution
         public int GetHullSize()
         {
             var loop = DFS(GetStart());
+            // Fix Start node
+            var a = loop[1];
+            var b = loop.Last();
+            var directions = Pipe.GetDirectionForType(a.Type).Concat(Pipe.GetDirectionForType(b.Type));
+            var outgoingDirections = directions.Select(Pipe.GetOppositeDirection).ToList();
+            GetStart().Type = Enum.GetValues(typeof(PipeType))
+                .Cast<PipeType>()
+                .Where(p => p != PipeType.Ground && p != PipeType.Start)
+                .First(p => Pipe.GetDirectionForType(p).All(d => outgoingDirections.Contains(d)));
+
             var remainingPipes = AllPipes.Except(loop);
 
             // Use ray algorithm,
@@ -97,10 +107,6 @@ public class Day10Solution : Solution
                 var rightCount = rightPipes.Count > 0 ? CountCrossings(rightPipes) : 0;
 
                 if (leftCount % 2 == 1 && rightCount > 0)
-                {
-                    count++;
-                }
-                else if (rightCount % 2 == 1 && leftCount > 0)
                 {
                     count++;
                 }
@@ -153,7 +159,7 @@ public class Day10Solution : Solution
     {
         public Pipe? Parent { get; set; } = null;
         public Point Coord { get; }
-        public PipeType Type { get; }
+        public PipeType Type { get; set; }
 
         public Pipe(Point coord, PipeType type)
         {
@@ -211,7 +217,7 @@ public class Day10Solution : Solution
                 .ToList();
 
 
-        private static Direction GetOppositeDirection(Direction d) =>
+        public static Direction GetOppositeDirection(Direction d) =>
             d switch
             {
                 Direction.Up => Direction.Down,
