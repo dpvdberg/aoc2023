@@ -28,7 +28,7 @@ public class Day10Solution : Solution
         return part switch
         {
             SolutionPart.PartA => Parse().GetMaxDistancePipeInLoop().ToString(),
-            SolutionPart.PartB => Parse().GetHullSize().ToString(),
+            SolutionPart.PartB => Parse().GetHull().Count.ToString(),
             _ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
         };
     }
@@ -61,60 +61,51 @@ public class Day10Solution : Solution
         public int GetMaxDistancePipeInLoop() =>
             (int)Math.Floor((double)DFS(GetStart()).Count / 2);
 
-        private int CountCrossings(List<Pipe> pipes)
+        private int CountCrossings(IEnumerable<Pipe> pipes)
         {
-            var groups = pipes
-                .SelectMany(p => Pipe.GetDirectionForType(p.Type))
-                .ToLookup(d => d);
-
-            if (!groups[Direction.Down].Any() || !groups[Direction.Up].Any())
-            {
-                return 0;
-            }
-
-            return Math.Min(groups[Direction.Down].Count(), groups[Direction.Up].Count());
+            var directions = pipes.SelectMany(p => Pipe.GetDirectionForType(p.Type)).ToList();
+            return Math.Min(directions.Count(d => d == Direction.Down), directions.Count(d => d == Direction.Up));
         }
-
-        public int GetHullSize()
+        
+        public List<Pipe> GetHull()
         {
-            var loop = DFS(GetStart());
+            var start = GetStart();
+            var loop = DFS(start);
+            
             // Fix Start node
-            var a = loop[1];
-            var b = loop.Last();
-            var directions = Pipe.GetDirectionForType(a.Type).Concat(Pipe.GetDirectionForType(b.Type));
-            var outgoingDirections = directions.Select(Pipe.GetOppositeDirection).ToList();
-            GetStart().Type = Enum.GetValues(typeof(PipeType))
+            var connectedToStart = new List<Pipe> { loop[1], loop.Last() };
+            var startType = Enum.GetValues(typeof(PipeType))
                 .Cast<PipeType>()
                 .Where(p => p != PipeType.Ground && p != PipeType.Start)
-                .First(p => Pipe.GetDirectionForType(p).All(d => outgoingDirections.Contains(d)));
+                .First(p => !connectedToStart.Except(new Pipe(start.Coord, p).GetConnectedPipes(this)).Any());
+            start.Type = startType;
 
             var remainingPipes = AllPipes.Except(loop);
 
             // Use ray algorithm,
-            // If number of crossings in the loop pipes to the left of a point in the field is uneven, it is in the hull
+            // If number of crossing (loop) pipes to the left of a point in the field is uneven, it is in the hull
 
-            int count = 0;
+            List<Pipe> pipes = new();
             foreach (var pipe in remainingPipes)
             {
                 var leftPipes = _rawMatrix[pipe.Coord.Y]
                     .Where(loop.Contains)
-                    .Where(p => p.Coord.X < pipe.Coord.X).ToList();
-                var leftCount = leftPipes.Count > 0 ? CountCrossings(leftPipes) : 0;
+                    .Where(p => p.Coord.X < pipe.Coord.X)
+                    .ToList();
+                
+                var leftCount = leftPipes.Any() ? CountCrossings(leftPipes) : 0;
 
-                var rightPipes = _rawMatrix[pipe.Coord.Y]
-                    .Where(loop.Contains)
-                    .Where(p => p.Coord.X > pipe.Coord.X).ToList();
-                var rightCount = rightPipes.Count > 0 ? CountCrossings(rightPipes) : 0;
-
-                if (leftCount % 2 == 1 && rightCount > 0)
+                if (leftCount % 2 == 1)
                 {
-                    count++;
+                    pipes.Add(pipe);
                 }
             }
 
-            return count;
-        }
+            start.Type = PipeType.Start;
 
+            return pipes;
+        }
+        
         public List<Pipe> DFS(Pipe start)
         {
             var visisted = new HashSet<Pipe>();

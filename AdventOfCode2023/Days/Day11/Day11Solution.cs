@@ -28,8 +28,8 @@ public class Day11Solution : Solution
     {
         return part switch
         {
-            SolutionPart.PartA => Parse(1).DistanceSum().ToString(),
-            SolutionPart.PartB => Parse(1000000 - 1).DistanceSum().ToString(),
+            SolutionPart.PartA => Parse(2).DistanceSum().ToString(),
+            SolutionPart.PartB => Parse(1000000).DistanceSum().ToString(),
             _ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
         };
     }
@@ -42,15 +42,15 @@ public class Day11Solution : Solution
             ExpansionFactor = expansionFactor;
         }
 
-        public List<int> GetGalaxyPositions(Axis axis) =>
+        private List<int> GetGalaxyPositions(Axis axis) =>
             Galaxies.Select(g => axis == Axis.X ? g.X : g.Y).ToList();
 
-        public int Min(Axis axis) => GetGalaxyPositions(axis).Min();
-        public int Max(Axis axis) => GetGalaxyPositions(axis).Max();
+        private int Min(Axis axis) => GetGalaxyPositions(axis).Min();
+        private int Max(Axis axis) => GetGalaxyPositions(axis).Max();
 
         private readonly Dictionary<Axis, List<int>> _expansionDict = new();
 
-        public List<int> FindExpansions(Axis axis)
+        private List<int> FindExpansions(Axis axis)
         {
             if (_expansionDict.TryGetValue(axis, out var findExpansions))
             {
@@ -76,13 +76,13 @@ public class Day11Solution : Solution
         public long DistanceSum() =>
             Galaxies.Combinations(2).Select(c => c.ToList())
                 .Select(c => (c[0], c[1]))
-                .Sum(c => c.Item1.ManhattanDistance(c.Item2) + ExpansionFactor * CountExpansions(c.Item1, c.Item2));
+                .Sum(c => c.Item1.ManhattanDistance(c.Item2) + (ExpansionFactor - 1) * CountExpansions(c.Item1, c.Item2));
 
         private List<Galaxy> Galaxies { get; }
-        public int ExpansionFactor { get; }
+        private int ExpansionFactor { get; }
     }
 
-    public enum Axis
+    private enum Axis
     {
         X,
         Y
