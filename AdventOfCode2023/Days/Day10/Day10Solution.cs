@@ -108,16 +108,16 @@ public class Day10Solution : Solution
         
         public List<Pipe> DFS(Pipe start)
         {
-            var visisted = new HashSet<Pipe>();
+            var visited = new HashSet<Pipe>();
             var stack = new Stack<Pipe>();
             stack.Push(start);
 
             while (stack.Count > 0)
             {
                 var current = stack.Pop();
-                if (!visisted.Contains(current))
+                if (!visited.Contains(current))
                 {
-                    visisted.Add(current);
+                    visited.Add(current);
 
                     var connected = current.GetConnectedPipes(this);
                     foreach (var p in connected)
@@ -131,7 +131,7 @@ public class Day10Solution : Solution
                                 return p.GetParentChain();
                             }
                         }
-                        else if (!visisted.Contains(p))
+                        else if (!visited.Contains(p))
                         {
                             p.Parent = current;
                             stack.Push(p);
