@@ -15,6 +15,13 @@ public static class ExtensionMethods
 
         return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
     }
+    
+    public static IEnumerable<IEnumerable<T>> Combinations<T>(this IEnumerable<T> elements, int k)
+    {
+        return k == 0 ? new[] { Array.Empty<T>() } :
+            elements.SelectMany((e, i) =>
+                elements.Skip(i + 1).Combinations(k - 1).Select(c => new[] {e}.Concat(c)));
+    }
 
     public static T ParseEnum<T>(this char value)
     {
