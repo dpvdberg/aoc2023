@@ -22,6 +22,14 @@ public static class ExtensionMethods
             elements.SelectMany((e, i) =>
                 elements.Skip(i + 1).Combinations(k - 1).Select(c => new[] {e}.Concat(c)));
     }
+    
+    public static IEnumerable<T> Repeat<T>(this IEnumerable<T> elements, int k)
+    {
+        if (k == 0)
+            return elements;
+        
+        return elements.Repeat(k - 1).Concat(elements);
+    }
 
     public static T ParseEnum<T>(this char value)
     {
