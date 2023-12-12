@@ -85,6 +85,7 @@ public class Day12Solution : Solution
         private long ProcessUnknown()
             =>
                 // Divide and Conquer
+                // TODO: replace list with (immutable) stack, probably a little cleaner...
                 new SpringArrangement(
                     new List<SpringType> { SpringType.Operational }.Concat(Springs.Skip(1)).ToList(),
                     Groups
