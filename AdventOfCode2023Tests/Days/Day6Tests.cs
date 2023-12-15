@@ -1,7 +1,7 @@
 ﻿using AdventOfCode2023.Common;
 using AdventOfCode2023.Days.Day6;
 
-namespace AdventOfCode2023Tests.Days.Day3;
+namespace AdventOfCode2023Tests.Days;
 
 public class Day6Tests
 {
