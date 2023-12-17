@@ -23,6 +23,20 @@ public static class ExtensionMethods
                 elements.Skip(i + 1).Combinations(k - 1).Select(c => new[] {e}.Concat(c)));
     }
     
+    public static T? GetAtOrNull<T>(this T[][] array, int a, int b)
+    {
+        if (a >= 0 && a < array.Length)
+        {
+            var row = array[a];
+            if (b >= 0 && b < row.Length)
+            {
+                return row[b];
+            } 
+        }
+
+        return default;
+    }
+    
     public static IEnumerable<T> Repeat<T>(this IEnumerable<T> elements, int k)
     {
         if (k == 0)
