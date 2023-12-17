@@ -79,10 +79,15 @@
       <Content Include="Inputs\day16.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Inputs\day17.txt" />
+      <Content Include="Inputs\day17.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+      <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
     </ItemGroup>
 
 </Project>
