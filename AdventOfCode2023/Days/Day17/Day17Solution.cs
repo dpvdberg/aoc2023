@@ -139,7 +139,6 @@ public class Day17Solution : Solution
         var scoreCache = new DictionaryWithDefault<SearchState, int>(int.MaxValue);
 
         queue.Enqueue(new SearchState(start, Movement.Direction.East, 0, 0), 0);
-        queue.Enqueue(new SearchState(start, Movement.Direction.South, 0, 0), 0);
 
         while (queue.Count > 0)
         {
