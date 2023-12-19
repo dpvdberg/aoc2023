@@ -19,6 +19,15 @@ public class Day19Solution : Solution
 
     public override string Solve(SolutionPart part)
     {
+        // General remark:
+        //
+        // I'm using a bottom up approach here, were we build a chain of conditions that yield accepting parts.
+        // Given these chains, we can quite easily solve both parts of the puzzle.
+        //
+        // However, we could also start with an object representing 4 ranges of [1,4000] and then cut for each 'decision node',
+        // i.e. applying the inequality and applying the negated inequality for each condition, yielding two such objects.
+        // You would automatically end up with the ranges that are computed in GetAcceptingCombinations in this solution.
+        // Maybe that requires less code, but I'm too lazy to re-write this :)
         return part switch
         {
             SolutionPart.PartA => Parse().GetAcceptedParts().Sum(p => p.RatingSum).ToString(),
