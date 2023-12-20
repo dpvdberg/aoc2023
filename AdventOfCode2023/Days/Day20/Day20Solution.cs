@@ -153,7 +153,7 @@ public class Day20Solution : Solution
             var conjugationInputCycleSize = conjugationParent.Input
                 .ToDictionary(i => i, i => 0);
             
-            int index = 0;
+            int index = 1;
             while (conjugationInputCycleSize.Values.Any(c => c == 0))
             {
                 var actionIndex = index;
@@ -163,7 +163,7 @@ public class Day20Solution : Solution
                     {
                         if (conjugationParent.Memory[input] && conjugationInputCycleSize[input] == 0)
                         {
-                            conjugationInputCycleSize[input] = actionIndex + 1;
+                            conjugationInputCycleSize[input] = actionIndex;
                         }
                     }
                 });
