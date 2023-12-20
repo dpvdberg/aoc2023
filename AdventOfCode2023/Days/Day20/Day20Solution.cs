@@ -148,54 +148,23 @@ public class Day20Solution : Solution
 
         public long CountButtonPressesUntilLow(Module rx)
         {
-            var rxConjugationParents = new List<ConjunctionModule>();
-            var s = new Stack<(Module, int)>();
-            s.Push((rx, 0));
-            while (s.Count > 0)
-            {
-                var (n, i) = s.Pop();
-                if (n is FlipFlopModule && n.Input.Count > 1)
-                {
-                    throw new NotImplementedException("This makes life difficult...");
-                }
-                
-                foreach (var input in n.Input)
-                {
-                    if (input is ConjunctionModule c)
-                    {
-                        rxConjugationParents.Add(c);
-                    }
-                    else if (input is FlipFlopModule f)
-                    {
-                        s.Push((input, i + 1));
-                    }
-                }
-            }
-
-            // We need one of the conjugation parents (say x) to send a low signal, which it will do if all
-            // of its parents have sent a high signal at a given time.
-            //
-            // If the number of flip-flops on the road from x ro rx is uneven, we have to do this twice (right?)
-
-            var conjugationInputCycleSize = rxConjugationParents
-                .ToDictionary(c => c, c => c.Input.ToDictionary(x => x, x => 0));
+            // First we had an excessive amount of code to handle the different types of inputs for rx
+            // But it appears the input of rx is a single conjugation module, so that makes life easier...
+            var conjugationParent = (ConjunctionModule) rx.Input.FirstOrDefault()!;
+            var conjugationInputCycleSize = conjugationParent.Input
+                .ToDictionary(i => i, i => 0);
             
-            // For any conjugation, find the LCM of the cycles of its inputs.
-
             int index = 0;
-            while (!conjugationInputCycleSize.Values.Any(c => c.All(k => k.Value != 0)))
+            while (conjugationInputCycleSize.Values.Any(c => c == 0))
             {
                 var actionIndex = index;
                 PushButtonOnce(afterPulse: () =>
                 {
-                    foreach (var c in rxConjugationParents)
+                    foreach (var input in conjugationInputCycleSize.Keys)
                     {
-                        foreach (var input in c.Input)
+                        if (conjugationParent.Memory[input] && conjugationInputCycleSize[input] == 0)
                         {
-                            if (c.Memory[input] && conjugationInputCycleSize[c][input] == 0)
-                            {
-                                conjugationInputCycleSize[c][input] = actionIndex + 1;
-                            }
+                            conjugationInputCycleSize[input] = actionIndex + 1;
                         }
                     }
                 });
@@ -204,9 +173,8 @@ public class Day20Solution : Solution
             }
 
             return conjugationInputCycleSize
-                .FirstOrDefault(c => c.Value.All(k => k.Value != 0))
-                .Value.Select(v => (long) v.Value)
-                .ToList()
+                .Values
+                .Select(v => (long) v)
                 .LeastCommonMultiple();
         }
     }
