@@ -190,8 +190,6 @@ public class Day20Solution : Solution
 
     private class ButtonModule : Module
     {
-        public int PressCount { get; private set; } = 0;
-        
         public override bool ReceivePulse(Module inputModule, bool high)
         {
             throw new InvalidOperationException("Button module cannot receive a pulse");
@@ -199,7 +197,6 @@ public class Day20Solution : Solution
 
         public override List<Module> Pulse()
         {
-            PressCount++;
             base.Pulse();
             if (Output is not [BroadcastModule])
             {
