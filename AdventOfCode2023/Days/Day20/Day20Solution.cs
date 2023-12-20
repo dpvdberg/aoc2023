@@ -148,8 +148,7 @@ public class Day20Solution : Solution
 
         public long CountButtonPressesUntilLow(Module rx)
         {
-            // First we had an excessive amount of code to handle the different types of inputs for rx
-            // But it appears the input of rx is a single conjugation module, so that makes life easier...
+            // It appears the input of rx is a single conjugation module, so that makes life easier...
             var conjugationParent = (ConjunctionModule) rx.Input.FirstOrDefault()!;
             var conjugationInputCycleSize = conjugationParent.Input
                 .ToDictionary(i => i, i => 0);
