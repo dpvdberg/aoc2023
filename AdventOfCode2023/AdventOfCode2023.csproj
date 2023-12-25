@@ -16,91 +16,30 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="inputs\day1.txt" />
-      <Content Include="Inputs\day1.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day2.txt" />
-      <Content Include="Inputs\day2.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day3.txt" />
-      <Content Include="Inputs\day3.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day4.txt" />
-      <Content Include="Inputs\day4.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day5.txt" />
-      <Content Include="Inputs\day5.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day6.txt" />
-      <Content Include="Inputs\day6.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day7.txt" />
-      <Content Include="Inputs\day7.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day8.txt" />
-      <Content Include="Inputs\day8.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day9.txt" />
-      <Content Include="Inputs\day9.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day10.txt" />
-      <Content Include="Inputs\day10.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day11.txt" />
-      <Content Include="Inputs\day11.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day12.txt" />
-      <Content Include="Inputs\day12.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day13.txt" />
-      <Content Include="Inputs\day13.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day14.txt" />
-      <Content Include="Inputs\day14.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day15.txt" />
-      <Content Include="Inputs\day15.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day16.txt" />
-      <Content Include="Inputs\day16.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day17.txt" />
-      <Content Include="Inputs\day17.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day18.txt" />
-      <Content Include="Inputs\day18.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day19.txt" />
-      <Content Include="Inputs\day19.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day20.txt" />
-      <Content Include="Inputs\day20.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day21.txt" />
-      <Content Include="Inputs\day21.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day22.txt" />
-      <Content Include="Inputs\day22.txt">
+      <None Remove="Inputs\day22.txt" />
+      <None Remove="Inputs\day23.txt" />
+      <Content Include="Inputs\day23.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
