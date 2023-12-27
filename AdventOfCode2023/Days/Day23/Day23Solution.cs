@@ -299,44 +299,4 @@ public class Day23Solution : Solution
         SlopeSouth = 'v',
         SlopeWest = '<'
     }
-
-    private sealed class Vec2 : IEquatable<Vec2>
-    {
-        public int X { get; }
-        public int Y { get; }
-
-        public Vec2(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public static Vec2 operator +(Vec2 a, Vec2 b)
-            => new(a.X + b.X, a.Y + b.Y);
-
-        public bool Equals(Vec2? other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return X == other.X && Y == other.Y;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Vec2)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(X, Y);
-        }
-
-        public override string ToString()
-        {
-            return $"({X}, {Y})";
-        }
-    }
 }
