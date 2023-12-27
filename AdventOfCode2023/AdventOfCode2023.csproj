@@ -15,6 +15,9 @@
       <Content Update="inputs\day1">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <Content Include="Inputs\day24.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="inputs\day1.txt" />
       <None Remove="Inputs\day2.txt" />
       <None Remove="Inputs\day3.txt" />
@@ -39,17 +42,12 @@
       <None Remove="Inputs\day22.txt" />
       <None Remove="Inputs\day22.txt" />
       <None Remove="Inputs\day23.txt" />
-      <Content Include="Inputs\day23.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Inputs\day24.txt" />
-      <Content Include="Inputs\day24.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+      <PackageReference Include="MathNet.Spatial" Version="0.6.0" />
       <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
       <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
     </ItemGroup>

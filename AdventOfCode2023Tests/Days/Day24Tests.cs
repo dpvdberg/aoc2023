@@ -20,4 +20,10 @@ public class Day24Tests
     {
         return new Day24Solution(input).Solve(SolutionPart.PartA);
     }
+    
+    [TestCase(TestData, ExpectedResult = "47")]
+    public string PartB(string input)
+    {
+        return new Day24Solution(input).Solve(SolutionPart.PartB);
+    }
 }

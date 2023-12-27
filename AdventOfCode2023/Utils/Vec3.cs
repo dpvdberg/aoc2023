@@ -1,5 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Spatial.Euclidean;
+using BigInteger = System.Numerics.BigInteger;
 
 namespace AdventOfCode2023.Utils;
 
@@ -20,7 +22,12 @@ public sealed class Vec3 : IEquatable<Vec3>
 
     public Vector<double> ToMathVector()
     {
-        return Vector.Build.DenseOfArray(new double[] { X, Y, Z });
+        return Vector<double>.Build.DenseOfArray(new double[] { X, Y, Z });
+    }
+
+    public Vector3D ToVector3D()
+    {
+        return Vector3D.OfVector(ToMathVector());
     }
 
     public Vec2 GetXY() => new(X, Y);
