@@ -8,40 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="days\day1\input\input.txt" />
       <None Remove="Inputs\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Update="inputs\day1">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="inputs\day1.txt" />
-      <None Remove="Inputs\day2.txt" />
-      <None Remove="Inputs\day3.txt" />
-      <None Remove="Inputs\day4.txt" />
-      <None Remove="Inputs\day5.txt" />
-      <None Remove="Inputs\day6.txt" />
-      <None Remove="Inputs\day7.txt" />
-      <None Remove="Inputs\day8.txt" />
-      <None Remove="Inputs\day9.txt" />
-      <None Remove="Inputs\day10.txt" />
-      <None Remove="Inputs\day11.txt" />
-      <None Remove="Inputs\day12.txt" />
-      <None Remove="Inputs\day13.txt" />
-      <None Remove="Inputs\day14.txt" />
-      <None Remove="Inputs\day15.txt" />
-      <None Remove="Inputs\day16.txt" />
-      <None Remove="Inputs\day17.txt" />
-      <None Remove="Inputs\day18.txt" />
-      <None Remove="Inputs\day19.txt" />
-      <None Remove="Inputs\day20.txt" />
-      <None Remove="Inputs\day21.txt" />
-      <None Remove="Inputs\day22.txt" />
-      <None Remove="Inputs\day22.txt" />
-      <None Remove="Inputs\day23.txt" />
-      <None Remove="Inputs\day24.txt" />
-      <None Remove="Inputs\day25.txt" />
     </ItemGroup>
 
     <ItemGroup>
