@@ -55,13 +55,13 @@ public class Day24Solution : Solution
 
         // Could be any three rays
         var answerToLife = 42;
-        var v0 = rays[answerToLife].Direction.ToVector3D();
-        var v1 = rays[answerToLife + 1].Direction.ToVector3D();
-        var v2 = rays[answerToLife + 2].Direction.ToVector3D();
+        var v0 = rays[answerToLife % rays.Count].Direction.ToVector3D();
+        var v1 = rays[(answerToLife + 1) % rays.Count].Direction.ToVector3D();
+        var v2 = rays[(answerToLife + 2) % rays.Count].Direction.ToVector3D();
 
-        var p0 = rays[answerToLife].Position.ToVector3D();
-        var p1 = rays[answerToLife + 1].Position.ToVector3D();
-        var p2 = rays[answerToLife + 2].Position.ToVector3D();
+        var p0 = rays[answerToLife % rays.Count].Position.ToVector3D();
+        var p1 = rays[(answerToLife + 1) % rays.Count].Position.ToVector3D();
+        var p2 = rays[(answerToLife + 2) % rays.Count].Position.ToVector3D();
 
         // Do some shifting to reduce size of positions
         var min = Vector3D.OfVector(p0.ToVector().PointwiseMinimum(p1.ToVector()).PointwiseMinimum(p2.ToVector()));
@@ -88,7 +88,7 @@ public class Day24Solution : Solution
         return pRock.ToVector().Sum();
     }
 
-    private long CountIntersectionsInArea(long min, long max)
+    public long CountIntersectionsInArea(long min, long max)
     {
         var rays = Parse();
         var pairs = new List<(Ray, Ray)>();

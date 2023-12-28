@@ -18,7 +18,7 @@ public class Day24Tests
     [TestCase(TestData, ExpectedResult = "2")]
     public string PartA(string input)
     {
-        return new Day24Solution(input).Solve(SolutionPart.PartA);
+        return new Day24Solution(input).CountIntersectionsInArea(7, 27).ToString();
     }
     
     [TestCase(TestData, ExpectedResult = "47")]

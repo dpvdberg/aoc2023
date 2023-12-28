@@ -28,6 +28,7 @@ public class Day21Tests
     }
     
     [TestCase(ExpectedResult = "3830")]
+    [Ignore("Real data not checked in")]
     public string PartA_RealData()
     {
         return new Day21SolutionNaive(false).Solve(SolutionPart.PartA);
