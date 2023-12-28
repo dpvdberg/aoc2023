@@ -16,6 +16,7 @@ using AdventOfCode2023.Days.Day21;
 using AdventOfCode2023.Days.Day22;
 using AdventOfCode2023.Days.Day23;
 using AdventOfCode2023.Days.Day24;
+using AdventOfCode2023.Days.Day25;
 using AdventOfCode2023.Days.Day3;
 using AdventOfCode2023.Days.Day4;
 using AdventOfCode2023.Days.Day5;
@@ -50,7 +51,8 @@ var days = new List<Solution>()
     // new Day21Solution()
     // new Day22Solution()
     // new Day23Solution()
-    new Day24Solution()
+    // new Day24Solution()
+    new Day25Solution()
 };
 
 days.ForEach(s => s.PrintAllSolutions());
